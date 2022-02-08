@@ -5,7 +5,7 @@ import {
   numbers
 } from "./character-sets.js";
 
-type stOrNr = string | number;
+type StOrNr = string | number;
 
 // password configuration
 const mustHaveUpperCaseLetters: boolean = true;
@@ -15,7 +15,7 @@ const mustHaveSpecialCharacters: boolean = true;
 const passwordLength: number = 20;
 
 // get all characters that are allowed according to our setup
-function getAllowedCharacters(): stOrNr[] {
+function getAllowedCharacters(): StOrNr[] {
   const allowedCharacters = [];
 
   if (mustHaveLowerCaseLetters) allowedCharacters.push(...lowerCaseLetters);
@@ -27,15 +27,15 @@ function getAllowedCharacters(): stOrNr[] {
 }
 
 // given an array, return a random item from it
-function getRandomItemFromArray(array: stOrNr[]): stOrNr {
+function getRandomItemFromArray(array: StOrNr[]): StOrNr {
   const randomIndex = Math.floor(Math.random() * array.length);
 
   return array[randomIndex];
 }
 
 // make sure at least one of the required characters is present, to pass a potential validator
-function getMandatoryCharacters(): stOrNr[] {
-  const result: stOrNr[] = [];
+function getMandatoryCharacters(): StOrNr[] {
+  const result: StOrNr[] = [];
 
   if (mustHaveLowerCaseLetters) {
     const character = getRandomItemFromArray(lowerCaseLetters);
@@ -58,9 +58,9 @@ function getMandatoryCharacters(): stOrNr[] {
 }
 
 // fill the rest of the password with whatever is allowed
-function getRandomCharacters(numberOfCharacters: number): stOrNr[] {
-  const randomCharacters: stOrNr[] = [];
-  const allowedCharacters: stOrNr[] = getAllowedCharacters();
+function getRandomCharacters(numberOfCharacters: number): StOrNr[] {
+  const randomCharacters: StOrNr[] = [];
+  const allowedCharacters: StOrNr[] = getAllowedCharacters();
 
   for (let i: number = 1; i <= numberOfCharacters; i++) {
     const randomChar = getRandomItemFromArray(allowedCharacters);
@@ -70,22 +70,22 @@ function getRandomCharacters(numberOfCharacters: number): stOrNr[] {
 }
 
 // randomize the order of items in the array
-function shuffleArray(array: stOrNr[]): stOrNr[] {
+function shuffleArray(array: StOrNr[]): StOrNr[] {
   return array.sort(() => 0.5 - Math.random());
 }
 
 // generate the final result
 function generatePassword() {
-  const requiredCharacters: stOrNr[] = getMandatoryCharacters();
-  const remainingCharacters: stOrNr[] = getRandomCharacters(
+  const requiredCharacters: StOrNr[] = getMandatoryCharacters();
+  const remainingCharacters: StOrNr[] = getRandomCharacters(
     passwordLength - requiredCharacters.length
   );
 
-  const generatedCharacters: stOrNr[] = [
+  const generatedCharacters: StOrNr[] = [
     ...requiredCharacters,
     ...remainingCharacters
   ];
-  const shuffledChars: stOrNr[] = shuffleArray(generatedCharacters);
+  const shuffledChars: StOrNr[] = shuffleArray(generatedCharacters);
 
   const password: string = shuffledChars.join("");
   if (!password.length) {
